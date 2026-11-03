@@ -18,6 +18,31 @@ module.exports = {
         outputModule: true,
     },
 
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.css'],
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: {
+                    loader: 'ts-loader',
+                    options: {
+                        compilerOptions: {
+                            noEmit: false,
+                        },
+                    },
+                },
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+        ],
+    },
+
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
