@@ -1,8 +1,8 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const DotenvWebpackPlugin = require('dotenv-webpack');
 
 const baseConfig = {
     entry: path.resolve(__dirname, './src/index.js'),
@@ -13,10 +13,22 @@ const baseConfig = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.ts$/,
+                use: {
+                    loader: 'ts-loader',
+                    options: {
+                        compilerOptions: {
+                            noEmit: false,
+                        },
+                    },
+                },
+                exclude: /node_modules/,
+            },
         ],
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.ts', '.js'],
     },
     output: {
         filename: 'index.js',
